@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Facility Reservation System</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <h1>Facility Reservation</h1>
+        <p>Role-based reservation approval and audit system</p>
+      </div>
+      <div class="session">
+        <span id="roleBadge" class="badge">Not signed in</span>
+        <button id="logoutBtn" class="secondary hidden">Logout</button>
+      </div>
+    </header>
+
+    <section id="authPanel" class="auth-panel">
+      <form id="authForm" class="auth-box">
+        <h2 id="authTitle">Login</h2>
+        <p id="authHint" class="muted">Use an existing account from Supabase Authentication.</p>
+        <label class="signup-only hidden">Full name <input id="authName" placeholder="Juan Dela Cruz" /></label>
+        <label>Email <input id="authEmail" type="email" required /></label>
+        <label>Password <input id="authPassword" type="password" required minlength="6" /></label>
+        <label class="signup-only hidden">Role
+          <select id="authRole">
+            <option value="requester">Requester</option>
+            <option value="staff">Facility Staff</option>
+            <option value="admin">Administrator</option>
+          </select>
+        </label>
+        <div class="auth-actions">
+          <button id="loginBtn" type="button">Login</button>
+          <button id="signupBtn" type="button" class="hidden">Create Account</button>
+          <button id="toggleAuthBtn" type="button" class="secondary">Need account?</button>
+        </div>
+      </form>
+    </section>
+
+    <main class="layout">
+      <aside class="sidebar">
+        <button class="nav active" data-view="facilities">Facilities</button>
+        <button class="nav" data-view="reservations">Reservations</button>
+        <button class="nav" data-view="requests">Service Requests</button>
+        <button class="nav admin-only" data-view="users">Users</button>
+        <button class="nav admin-only" data-view="audit">Audit Logs</button>
+      </aside>
+
+      <section class="content">
+        <section id="facilities" class="view active">
+          <div class="section-head">
+            <h2>Facilities</h2>
+            <button id="addFacilityBtn" class="admin-only">Add Facility</button>
+          </div>
+          <div id="facilityList" class="grid"></div>
+        </section>
+
+        <section id="reservations" class="view">
+          <div class="section-head">
+            <h2>Reservations</h2>
+            <button id="openReservationBtn" class="requester-only">New Reservation</button>
+          </div>
+          <div id="reservationList" class="table-wrap"></div>
+        </section>
+
+        <section id="requests" class="view">
+          <div class="section-head">
+            <h2>Service Requests</h2>
+            <button id="openServiceBtn" class="staff-only">New Service Request</button>
+          </div>
+          <div id="serviceList" class="table-wrap"></div>
+        </section>
+
+        <section id="users" class="view protected">
+          <div class="section-head">
+            <h2>Users</h2>
+          </div>
+          <div id="userList" class="table-wrap"></div>
+        </section>
+
+        <section id="audit" class="view protected">
+          <div class="section-head">
+            <h2>Audit Logs</h2>
+          </div>
+          <div id="auditList" class="table-wrap"></div>
+        </section>
+      </section>
+    </main>
+
+    <dialog id="reservationDialog">
+      <form method="dialog" id="reservationForm">
+        <h3>Submit Reservation</h3>
+        <label>Facility <select id="reservationFacility" required></select></label>
+        <label>Start <input id="reservationStart" type="datetime-local" required /></label>
+        <label>End <input id="reservationEnd" type="datetime-local" required /></label>
+        <label>Purpose <textarea id="reservationPurpose" required></textarea></label>
+        <menu>
+          <button value="cancel" type="button" class="closeDialog">Cancel</button>
+          <button value="submit">Save</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <dialog id="facilityDialog">
+      <form method="dialog" id="facilityForm">
+        <h3>Add Facility</h3>
+        <label>Name <input id="facilityName" required /></label>
+        <label>Location <input id="facilityLocation" required /></label>
+        <label>Status
+          <select id="facilityStatus">
+            <option value="Active">Active</option>
+            <option value="Maintenance">Maintenance</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+        </label>
+        <label>Condition <input id="facilityCondition" value="Good" required /></label>
+        <menu>
+          <button value="cancel" type="button" class="closeDialog">Cancel</button>
+          <button value="submit">Save</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <dialog id="serviceDialog">
+      <form method="dialog" id="serviceForm">
+        <h3>Create Service Request</h3>
+        <label>Facility <select id="serviceFacility" required></select></label>
+        <label>Concern <textarea id="serviceConcern" required></textarea></label>
+        <menu>
+          <button value="cancel" type="button" class="closeDialog">Cancel</button>
+          <button value="submit">Save</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <div id="toast" role="status"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
