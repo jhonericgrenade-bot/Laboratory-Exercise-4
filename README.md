@@ -21,13 +21,15 @@ This project is a GitHub Pages + Supabase implementation for Laboratory 4 - Sect
 
 The system needs three accounts to test role-based access:
 
-| Account Type | Role Value |
-|---|---|
-| Administrator | `admin` |
-| Facility Staff | `staff` |
-| Requester | `requester` |
+| Account Type | Email | Password | Role Value |
+|---|---|---|---|
+| Administrator | admin@gmail.com | `123456` | `admin` |
+| Facility Staff | staff@gmail.com | `123456` | `staff` |
+| Requester | requester@gmail.com | `123456` | `requester` |
 
 Roles are stored in the `profiles` table. The complete database setup is already included in `supabase-final-schema.sql`.
+
+> These are public demo accounts for laboratory checking only. Do not use them for real or sensitive data.
 
 ## How To Test
 

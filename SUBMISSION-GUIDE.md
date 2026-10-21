@@ -19,6 +19,16 @@
 
 ## 2. Reservation Workflow
 
+## Test Accounts
+
+| Account | Email | Password | Role |
+|---|---|---|---|
+| Administrator | admin@gmail.com | `123456` | `admin` |
+| Facility Staff | staff@gmail.com | `123456` | `staff` |
+| Requester | requester@gmail.com | `123456` | `requester` |
+
+These are demo accounts for checking the role-based features. They must not be used for real or sensitive data.
+
 Submitted -> Pending -> Administrator Review -> Approved or Rejected
 
 If approved:
