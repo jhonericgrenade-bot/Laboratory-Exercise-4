@@ -30,6 +30,6 @@ Fill these in before submitting.
 
 | Test User | Role |
 |---|---|
-|  | admin |
-|  | staff |
-|  | requester |
+|  | admin | admin@gmail.com |123456
+|  | staff | staff@gmail.com |123456
+|  | requester | requester@gmail.com |123456
