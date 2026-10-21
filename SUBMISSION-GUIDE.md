@@ -29,6 +29,8 @@
 
 These are demo accounts for checking the role-based features. They must not be used for real or sensitive data.
 
+**Administrator demo link:** `https://jhonericgrenade-bot.github.io/Laboratory-Exercise-4/?demo=admin`
+
 Submitted -> Pending -> Administrator Review -> Approved or Rejected
 
 If approved:

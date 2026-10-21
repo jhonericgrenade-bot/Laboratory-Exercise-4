@@ -1,5 +1,7 @@
 const SUPABASE_URL = "https://kyuxekqiyqavdcgoinkd.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_D7nO1QjTPLFo8pCUXUaUvg_oQ8YASPA";
+const DEMO_ADMIN_EMAIL = "admin@gmail.com";
+const DEMO_ADMIN_PASSWORD = "123456";
 
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -92,6 +94,21 @@ async function loadSession() {
   if (error) return showError(error);
   state.session = data.session;
   await loadData();
+}
+
+async function loadDemoAdminSession() {
+  showToast("Signing in to the administrator demo account...");
+  await supabaseClient.auth.signOut({ scope: "local" });
+
+  const { data, error } = await supabaseClient.auth.signInWithPassword({
+    email: DEMO_ADMIN_EMAIL,
+    password: DEMO_ADMIN_PASSWORD
+  });
+
+  if (error) return showError(error);
+  state.session = data.session;
+  await loadData();
+  showToast("Logged in as Administrator.");
 }
 
 async function loadData() {
@@ -511,4 +528,8 @@ document.querySelector("#serviceForm").addEventListener("submit", async (event) 
 });
 
 setAuthMode("login");
-loadSession();
+if (new URLSearchParams(window.location.search).get("demo") === "admin") {
+  loadDemoAdminSession();
+} else {
+  loadSession();
+}
